@@ -1,0 +1,35 @@
+% Probabilistic facts
+0.8::cloudy.
+
+% Rules
+0.1::sprinkler:- cloudy.
+0.5::sprinkler:- \+ cloudy.
+
+0.8::rain:- cloudy.
+0.1::rain:- \+ cloudy.
+
+0.99::wet_grass :- sprinkler, rain.
+0.90::wet_grass :- \+ sprinkler, rain.
+0.90::wet_grass :- sprinkler, \+ rain.
+0.00::wet_grass :- \+ sprinkler, \+ rain.
+
+% Query
+evidence(cloudy).
+query(wet_grass).
+
+% P(w|c) = P(w,c) / P(w,c) + P(~w,c) 
+%        = 0.59616 / (0.59616 + 0.20384) =  0.7452
+
+% P(c,s,r,w) = P(w|s,r)P(s|c)P(r|c)P(c)
+%
+% P(w,c) = Sum_{s,r} P(w|s,r)P(s|c)P(r|c)P(c)
+%        = P(w|s,r)P(s|c)P(r|c)P(c) + P(w|~s,r)P(~s|c)P(r|c)P(c) 
+%          + P(w|s,~r)P(s|c)P(~r|c)P(c) + P(w|~s,~r)P(~s|c)P(~r|c)P(c) 
+%        = .99*.1*.8*.8 + .9*.9*.8*.8 + .9*.1*.2*.8 + 0.0 = 0.59616       
+%
+
+% P(~w,c) = P(~w|s,r)P(s|c)P(r|c)P(c) + P(~w|~s,r)P(~s|c)P(r|c)P(c) 
+%          + P(~w|s,~r)P(s|c)P(~r|c)P(c) + P(~w|~s,~r)P(~s|c)P(~r|c)P(c)
+%         = .01*.1*.8*.8 + .1*.9*.8*.8 + .1*.1*.2*.8 + 1*.9*.2*.8 =  0.20384
+
+     

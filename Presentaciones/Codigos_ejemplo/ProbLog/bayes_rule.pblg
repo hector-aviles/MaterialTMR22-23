@@ -1,0 +1,21 @@
+/* Calcula la probabilidad de que un texto sea de una clase t1 si aparece una palabra w1 (o no) en el texto */ 
+
+/* Hechos probabilísticos */
+0.5::topic.
+
+/* Recordar: El cálculo es:
+P(t1| w1,w2) = (P(w1|t1)P(w2|t1)P(t1))/ (P(w1|t1)P(w2|t1)P(t1) + P(w1|~t1)P(w2|~t1)P(~t1)) 
+          = (0.9 *.045*0.5)/((0.9 *.045* 0.5)+ (0.2*.8*0.5)) = .36*/  
+0.9::w1 :- topic.
+0.2::w1 :- \+ topic.
+0.1::w2 :- topic.
+0.8::w2 :- \+ topic.
+
+/* La presencia de evidencia "forza" la probabilidad condicional (porque w1,w2 pueden ocurrir en t1 y ~t1, ie, se marginaliza para P(w1,w2)) */ 
+evidence(w1).
+evidence(w2).
+/* Cálculo para cuando no sucede w1 (comentar las evidencias anteriores) */
+%evidence(\+ w1).
+%evidence(\+ w2).
+
+query(topic).

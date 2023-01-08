@@ -1,0 +1,16 @@
+/* Ejemplo de gripa con resultados de dos laboratorios independientes */
+
+% Hechos probabilísticos 
+0.07::gripa.
+
+% Reglas 
+0.90::l1 :- gripa.
+0.05::l1 :- \+ gripa.
+0.98::l2 :- gripa.
+0.01::l2 :- \+ gripa.
+
+% Query
+evidence(l1).
+evidence(l2).
+
+query(gripa).

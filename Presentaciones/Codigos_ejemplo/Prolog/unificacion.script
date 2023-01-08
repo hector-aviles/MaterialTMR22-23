@@ -1,0 +1,60 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Ejemplos de unificación
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+/* La instanciación de la variable sólo es válida en la línea de comandos (ó cláusula) donde se menciona */
+
+/* Constantes iguales */
+a = a.
+/* Constantes diferentes */
+a = b.
+/* Unifican */
+X = 3. 
+/* También unifican */
+3 = X.
+
+trace, X = 5, X = 10, nodebug.
+X = f(Y).
+X = point(1,2).
+X = [1,2].
+/* Dos variables no instanciadas pueden coincidir */
+X1 = X2.
+/* La variable */
+_ = X1.
+
+/* Unificación de predicados */
+es_hijo(X, Y) = es_hijo(juan, jose).
+es_hijo(X, jose) = es_hijo(juan, jose).
+p(1,2) = p(1,2).
+
+
+/* No hay unificación: */ 
+es_hijo(X, Y) = es_padre(juan, jose).
+es_hijo(juan, Y) = es_hijo(miguel, jose).
+/* No hay coincidencia porque X no puede ser 1 y 2 al mismo tiempo */
+esta_entre(1, 0, 2) = esta_entre(X, 0, X).
+esta_entre(1, 0, _) = esta_entre(X, 0, X).
+p(1,2) = p(1,2,3).
+
+parientes(X,Y) = parientes(a,b).
+parientes(X,Y) = amigos(a,b).
+parientes(X,X) = parientes(a,b).
+parientes(b,a) = parientes(a,b).
+[1, 2, 3] = [H|T].
+[1, 2, 3] = [1|[2|[3|[]]]].
+/* Falla de la unificación */
+[] = [H|T].
+
+/* Predicado 'is' */
+X = 5, Y = 5, X is Y.
+/* No hay coincidencia: */
+X = 5, Y = 10, X is Y.
+% X = 5, X = 5 * 1.
+X1 is 3.
+/* Error con 'is' si las variables no están instanciadas */
+X1 is X2.
+% 3 is X1.
+% x is mi_atomo.

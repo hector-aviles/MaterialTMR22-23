@@ -1,0 +1,29 @@
+/* Noisy-or: Multiple rules for the same head */
+
+/* Codificación del ejemplo de Enrique Sucar */
+
+% Probabilistic facts:
+/* P(Y=0|X1=1) = q1 = .1 */
+/* y además c1 representa a P(Y=1|X1=1) = 1 - P(Y=0|X1=1)= 1 - q1 */
+0.9::c1.
+0.9::c2.
+0.9::c3.
+
+% Rules:
+y :- c1.
+y :- c2.
+y :- c3.
+
+/* Evidencia para inducir que sólo alguna(s) (o ninguna) de las causas ocurren */
+/* Quitar el signo de comentario de una por una para ver el resultado */
+%evidence(\+ c1).
+%evidence(\+ c2).
+%evidence(\+ c3).
+
+/* Las reglas con la evidencia c1 se traducen como (y <=> c1|c2|3) & (c1) -> y */
+/* ie, y sucede con toda seguridad */
+evidence(c1).
+
+% Queries:
+query(y).
+query(\+ y).

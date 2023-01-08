@@ -1,0 +1,3 @@
+
+/* Estructura */
+functor(info_cliente(nombre(A, B), nacimiento(C, D, E)), Functor, Aridad).

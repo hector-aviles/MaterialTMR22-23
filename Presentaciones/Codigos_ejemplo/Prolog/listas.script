@@ -1,0 +1,36 @@
+/* Listas */ 
+
+/* Cabeza and cola */
+[Head|Tail] = [1,2,3].
+[1,2,3] = [Head|Tail].
+
+/* Para obtener elementos de posiciones específicas */
+[1,2,3] = [_,X|Tail].
+[1,2,3] = [_,_,X|[]].
+
+/* Representación alternativa */
+[1,2] = [1|[2|[]]].
+
+/* Concatenación de listas */
+append([1,2], [a,b], L).
+
+/* Longitud de una lista */
+length([a, [a,b,c], []], Length).
+
+/* Construcción dinámica de una lista */
+length(L, 5).
+
+/* Preguntar si hay un elemento específico dentro de la lista */
+member(c, [a, b, c]). 
+member(d, [a, b, c]). 
+
+/* Revertir la lista */
+reverse([a, e, i, o, u], L).
+
+/* Obtener el último elemento de la lista */ 
+last([a, e, i, o, u], X).
+
+/* Selecciona un elemento de una lista y retorna el resto de los elementos */
+select(i, [a, e, i, o, u], X).
+
+

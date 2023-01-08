@@ -1,0 +1,20 @@
+/* Cadena de Markov para modelar la evolución del clima (soleado, lluvioso) y calcular la probabilidad de estar en un estado particular en el tiempo máximo T=2 */
+
+/* Llamadas recursivas que "procesa" en el orden T = 0, T = 1, T = 2,... */
+/* P(S) = 0.5, P(R) = 0.5 */
+0.5::weather(0,sun); 0.5::weather(0,rain).
+
+/* Probabilidades de transición */
+/* P(S|S)=0.8, P(R|S) = .2*/
+0.8::weather(T,sun); 0.2::weather(T,rain) :- T > 0, T1 is T - 1, weather(T1, sun).
+/* P(S|R)=0.4, P(R|R) = .6*/
+0.4::weather(T,sun); 0.6::weather(T,rain) :- T > 0, T1 is T - 1, weather(T1, rain).
+
+/* Probabilidad de estar en un estado particular en el tiempo máximo T=2 */
+/* P(S2 = sun2) = P(SSS)+P(SRS)+P(RRS)+P(RSS)
+Nota: P(SSS) = P(S2 = sun | S1 = sun)P(S1 = sun | S0 = sun) P(S0 = sun)
+*/
+query(weather(2,_)).
+  
+  
+  

@@ -1,0 +1,33 @@
+/* Lanzamiento de dos monedas con la misma probabilidad de caer `cara' */
+
+% Probabilistic facts:
+0.6::lands_heads(_).
+
+% Background information:
+coin(c1).
+coin(c2).
+
+% Rules:
+/* Se aplica el principio inclusión exclusión: 
+ P(lands_heads(c1)=T ∨ lands_heads(c2)=T) = P(lands_heads(c1)=T) 
+                           + P(lands_heads(c2)=T) 
+                           - P(lands_heads(c1)=T ∧ lands_heads(c2)=T) */
+/* Esta codificación es útil para evitar escribir átomos para cada moneda, como se hace en las variantes de abajo */
+heads(C) :- coin(C), lands_heads(C).
+someHeads :- heads(_).
+
+/* Variante 1 */
+%heads(C) :- coin(C), lands_heads(C).
+%someHeads :- heads(c1); heads(c2).
+/* Incluso es posible añadir la evaluación de una tercera moneda no existente en los hechos */
+%someHeads :- heads(c1); heads(c2); heads(c3).
+
+/* Variante 2 */
+%heads(C) :- coin(C), lands_heads(C).
+%someHeads :- heads(c1).
+%someHeads :- heads(c2).
+
+% Queries:
+query(someHeads).
+
+

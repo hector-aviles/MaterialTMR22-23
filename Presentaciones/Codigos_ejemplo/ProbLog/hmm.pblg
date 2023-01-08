@@ -1,0 +1,38 @@
+%//////////////////////////////
+% HMM model - Problog
+% Tomado del paper: Luc De Raedt, Angelika Kimmig. Probabilistic (logic) programming concepts. Machine Learning volume 100, págs. 5-47. 2015.
+%//////////////////////////////
+
+/* HMM Model O = {a,b}, Q = {s0,s1} */
+/* Probabilidades iniciales */
+0.5::init(s0); 0.5::init(s1).
+/* Probabilidad de transición de s a s' en el tiempo T */
+0.7::trans(s0, s0, T); 0.3::trans(s0, s1, T). % T is the variable time 
+0.4::trans(s1, s0, T); 0.6::trans(s1, s1, T).
+/* Probabilidades de observaciones por estado*/
+0.2::output(s0, a, T); 0.8::output(s0, b, T).
+0.9::output(s1, a, T); 0.1::output(s1, b, T).
+
+/* Longitud esperada para la cadena de entrada */
+length(5).
+
+hmm(List) :- init(S), hmm(1, S, List).
+% last time T :
+/* Caso base: Criterio de paro */
+hmm(T, S, [Obs]) :- length(T), output(S, Obs, T).
+% earlier time T : output Obs in state S, transit from S to Next
+hmm(T, S, [Obs|R]) :- length(L), T < L, output(S, Obs, T), trans(S, Next, T), T1 is T + 1, hmm(T1, Next, R).
+
+/* Calcula la verosimilitud P(O_{0:{T-1}}|lambda) = Sum_{forall S_1,..., S_{T-1}} P(O_{0:{T-1}}, S_{0:{T-1}}), ie, una marginalización (ó promedio) para O_{0:T-1} sobre todas las secuencias de estados posibles */
+
+/* Query */
+query(hmm([a,a,a,a,a])).
+
+/* Notas: */
+/* El caso base (criterio de paro) para terminar la recursión es la cláusula hmm(T, S, [Obs])*/
+/* En la cláusula hmm(T, S, [Obs|R]), los átomos length(L), T < L validan la longitud de cadena recorrida (L) */
+/* A diferencia de la cadena de Markov, la recursión incrementa el índice de tiempo T, desde 0 a la longitud de la lista de entrada menos 1 */
+
+
+
+

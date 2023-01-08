@@ -1,0 +1,29 @@
+%//////////////////////////////
+% Markov chain modificado para recibir una secuencia de estados - ProbLog
+%//////////////////////////////
+
+/* Probabilidades iniciales */
+0.5::weather(1,sun); 0.5::weather(1,rain).
+
+/* Probabilidad de transición de s a s' en el tiempo T */
+0.8::trans(sun, sun, T); 0.2::trans(sun, rain, T). % T is the variable time 
+0.4::trans(rain, sun, T); 0.6::trans(rain, rain, T).
+
+/* Longitud esperada para la cadena de entrada */
+length(3).
+
+mc([S|Tail]) :- weather(1, S), mc(1, S, Tail).
+% last time T :
+/* Caso base: Criterio de paro */
+mc(T, S, []) :- length(T).
+/* Llamada recursiva */
+mc(T, S, [Next|Tail]) :- length(L), T =< L, trans(S, Next, T), T1 is T + 1, mc(T1, Next, Tail).
+
+/* Query */
+query(mc([sun,sun,sun])).
+
+
+
+
+
+

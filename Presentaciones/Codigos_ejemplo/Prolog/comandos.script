@@ -1,0 +1,74 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Sección 1. Verificación de átomos, números, variables y 
+%            términos compuestos
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+atom('Hola Mundo').
+atom(esto_es_un_atomo_). 
+atom(^>=\&@\#***/-??++).
+
+number(1.9823). 
+number(98883454). 
+number(-5). 
+
+var(_mi_Var).
+var(MiVar).
+var(_).
+
+functor(mi_predicado(X,Y), Functor, Arity).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Sección 2. Algunas funcionalidades básicas
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+/* Escritura. */
+write('Hello world'), nl, write(X).
+
+/* Lectura de teclado en una variable X */
+read(X).
+
+/* Ayuda sobre la instrucción 'trace' */
+help(atom).
+
+/* Detener ejecución y salir del intérprete. */
+halt.
+
+/* Listar los programas cargados en swi-prolog o los predicados correspondientes */
+listing. 
+listing(read). 
+
+/* Seguimiento con 'trace.' */
+trace, write('Hola mundo'), nodebug.
+
+/* `predicado(X), format('$\sim$w$\sim$n', [X]).': Alternativa para depurar */
+X is 10, write(X), format('~w~n', [X]). 
+
+/* Insertar una cláusula (hecho o regla) a la base de conocimiento, `asserta(cláusula).' Insertar en la primera posición y `assertz(cláusula).' para insertar en la última posición */
+assert(amigo(luis,pepe)), listing(amigo(luis,pepe)). 
+assert((madre(hijo, Madre) :- progenitor(hijo, Madre), mujer(Madre))), listing(madre(hijo,_)).
+
+/* Inserta una cláusula al inicio de la BD */
+asserta(amigo(luis,maria)), listing. 
+/* Inserta una cláusula al final de la BD */
+assertz(amigo(luis,miguel)), listing.
+
+/* Eliminar una cláusula a la base de conocimiento */
+retract(amigo(luis,miguel)). 
+%retract(amigo(luis,Y).
+
+/* Eliminar todas las cláusulas que unifiquen */
+retractall(amigo(X,Y)). 
+
+/* Consultar directorio de trabajo actual */
+pwd.
+
+/* Cambiar directorio de trabajo */
+working_directory(CWD, '/home/hector/Taller_EIR2021-2022/LPO_Prolog/ejemplos_prolog/').
+
+
+
